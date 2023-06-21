@@ -1,4 +1,5 @@
 import React from "react";
+import { XCircleIcon } from "@heroicons/react/24/outline";
 
 type Props = {
   id: number;
@@ -45,14 +46,14 @@ const Card: React.FC<Props> = ({
           Created At {created_at.toLocaleString()}
         </p>
       </div>
-      <button
-        className="p-4 bg-red-500"
+      <XCircleIcon
+        width={24}
+        height={24}
+        className="text-red-400 self-center"
         onClick={() => {
           onDeleteTodo(id);
         }}
-      >
-        x
-      </button>
+      />
     </div>
   );
 };
