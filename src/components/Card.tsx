@@ -17,7 +17,7 @@ const Card: React.FC<Props> = ({
   onDeleteTodo,
 }) => {
   return (
-    <div className="mb-4 flex gap-4 items-start pb-4 last:mb-0 last:pb-0 cursor-pointer">
+    <div className="select-none mb-4 flex gap-4 items-start pb-4 last:mb-0 last:pb-0 cursor-pointer">
       <span
         className={`flex h-2 w-2 translate-y-1 rounded-full ${
           completed ? "bg-green-500" : "bg-red-500"

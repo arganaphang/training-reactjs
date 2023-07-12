@@ -1,16 +1,31 @@
 import React from "react";
 import Card from "./components/Card";
+import Spinner from "./components/Spinner";
 import { Todo } from "./types/todo";
+import axios from "axios";
 
 function App() {
-  const [title, setTitle] = React.useState("");
-  const [todos, setTodos] = React.useState<Todo[]>([
-    {
-      id: 1,
-      title: "First Todo",
-      completed: false,
-    },
-  ]);
+  const [title, setTitle] = React.useState<string>("");
+  const [isLoading, setIsLoading] = React.useState<boolean>(false);
+  const [isError, setIsError] = React.useState<boolean>(false);
+  const [todos, setTodos] = React.useState<Todo[]>([]);
+
+  React.useEffect(() => {
+    setIsLoading(true);
+    axios
+      .get<Todo[]>("https://jsonplaceholder.typicode.com/todos")
+      .then((response) => {
+        setTodos(response.data);
+      })
+      .catch((e) => {
+        setIsError(true);
+        console.log(e.message);
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
+  }, []);
+
   const addTodo = (title: string) => {
     console.log("Add", title);
   };
@@ -63,14 +78,20 @@ function App() {
           />
         </form>
         <ul className="flex-1 overflow-auto">
-          {todos.map((todo) => (
-            <Card
-              key={todo.id}
-              {...todo}
-              onToggleTodo={toggleTodo}
-              onDeleteTodo={deleteTodo}
-            />
-          ))}
+          {isLoading ? (
+            <Spinner />
+          ) : (
+            todos.map((todo) => (
+              <Card
+                key={todo.id}
+                {...todo}
+                onToggleTodo={toggleTodo}
+                onDeleteTodo={deleteTodo}
+              />
+            ))
+          )}
+
+          {!isLoading && isError ? <p>Error Get Todos</p> : null}
         </ul>
       </div>
     </div>
