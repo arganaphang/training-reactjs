@@ -8,8 +8,7 @@ function App() {
     {
       id: 1,
       title: "First Todo",
-      is_done: false,
-      created_at: new Date(),
+      completed: false,
     },
   ]);
   const addTodo = (title: string) => {
@@ -17,15 +16,14 @@ function App() {
     tmp.push({
       id: Date.now(),
       title: title,
-      is_done: false,
-      created_at: new Date(),
+      completed: false,
     });
     setTodos(tmp);
   };
   const toggleTodo = (id: number) => {
     const tmp = todos.map((todo) => {
       if (todo.id === id) {
-        todo.is_done = !todo.is_done;
+        todo.completed = !todo.completed;
       }
       return todo;
     });

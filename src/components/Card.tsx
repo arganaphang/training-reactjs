@@ -4,8 +4,7 @@ import { XCircleIcon } from "@heroicons/react/24/outline";
 type Props = {
   id: number;
   title: string;
-  is_done: boolean;
-  created_at: Date;
+  completed: boolean;
   onToggleTodo: (id: number) => void;
   onDeleteTodo: (id: number) => void;
 };
@@ -13,8 +12,7 @@ type Props = {
 const Card: React.FC<Props> = ({
   id,
   title,
-  is_done,
-  created_at,
+  completed,
   onToggleTodo,
   onDeleteTodo,
 }) => {
@@ -22,7 +20,7 @@ const Card: React.FC<Props> = ({
     <div className="mb-4 flex gap-4 items-start pb-4 last:mb-0 last:pb-0 cursor-pointer">
       <span
         className={`flex h-2 w-2 translate-y-1 rounded-full ${
-          is_done ? "bg-green-500" : "bg-red-500"
+          completed ? "bg-green-500" : "bg-red-500"
         }`}
       />
       <div
@@ -33,17 +31,17 @@ const Card: React.FC<Props> = ({
       >
         <p
           className={`font-medium leading-none text-gray-700 ${
-            is_done ? "line-through" : undefined
+            completed ? "line-through" : undefined
           }`}
         >
           {title}
         </p>
         <p
           className={`text-sm text-muted-foreground text-gray-400 font-thin ${
-            is_done ? "line-through" : undefined
+            completed ? "line-through" : undefined
           }`}
         >
-          Created At {created_at.toLocaleString()}
+          Created At {new Date().toLocaleString()}
         </p>
       </div>
       <XCircleIcon
