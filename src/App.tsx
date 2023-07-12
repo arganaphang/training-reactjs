@@ -12,26 +12,13 @@ function App() {
     },
   ]);
   const addTodo = (title: string) => {
-    const tmp = todos;
-    tmp.push({
-      id: Date.now(),
-      title: title,
-      completed: false,
-    });
-    setTodos(tmp);
+    console.log("Add", title);
   };
   const toggleTodo = (id: number) => {
-    const tmp = todos.map((todo) => {
-      if (todo.id === id) {
-        todo.completed = !todo.completed;
-      }
-      return todo;
-    });
-    setTodos(tmp);
+    console.log("Toggle", id);
   };
   const deleteTodo = (id: number) => {
-    const tmp = todos.filter((todo) => todo.id !== id);
-    setTodos(tmp);
+    console.log("Delete", id);
   };
   return (
     <div className="min-h-screen flex flex-col justify-center items-center">
@@ -64,7 +51,6 @@ function App() {
             }
             // Trim title then add to todo
             addTodo(title.trim());
-            // reset input title
             setTitle("");
           }}
         >
