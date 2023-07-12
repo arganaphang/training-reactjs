@@ -1,30 +1,20 @@
 import React from "react";
 import Card from "./components/Card";
 import Spinner from "./components/Spinner";
-import { Todo } from "./types/todo";
-import axios from "axios";
+import { useQuery } from "@tanstack/react-query";
+import { getTodos } from "./services/todo";
 
 function App() {
   const [title, setTitle] = React.useState<string>("");
-  const [isLoading, setIsLoading] = React.useState<boolean>(false);
-  const [isError, setIsError] = React.useState<boolean>(false);
-  const [todos, setTodos] = React.useState<Todo[]>([]);
-
-  React.useEffect(() => {
-    setIsLoading(true);
-    axios
-      .get<Todo[]>("https://jsonplaceholder.typicode.com/todos")
-      .then((response) => {
-        setTodos(response.data);
-      })
-      .catch((e) => {
-        setIsError(true);
-        console.log(e.message);
-      })
-      .finally(() => {
-        setIsLoading(false);
-      });
-  }, []);
+  const {
+    data: todos,
+    isLoading,
+    isError,
+    refetch,
+  } = useQuery({
+    queryKey: ["todos"],
+    queryFn: getTodos,
+  });
 
   const addTodo = (title: string) => {
     console.log("Add", title);
@@ -52,8 +42,13 @@ function App() {
       <div className="border rounded-md px-12 py-6 w-96 h-96 flex flex-col gap-6">
         <div>
           <h1 className="font-semibold text-lg">Todo List</h1>
-          <p className="text-gray-500 font-thin">
-            You have {todos.length} todo
+          <p
+            className="text-gray-500 font-thin"
+            onClick={() => {
+              refetch();
+            }}
+          >
+            You have {todos?.length || 0} todo, click to reload
           </p>
         </div>
         <form
@@ -81,7 +76,7 @@ function App() {
           {isLoading ? (
             <Spinner />
           ) : (
-            todos.map((todo) => (
+            todos?.map((todo) => (
               <Card
                 key={todo.id}
                 {...todo}
