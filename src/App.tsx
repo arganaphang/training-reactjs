@@ -1,11 +1,9 @@
-import Header from "./components/Header";
-import Section from "./components/Section";
-
 function App() {
   return (
     <>
-      <Header />
-      <Section />
+      <div className="grid place-content-center min-h-screen">
+        <h1>Hello World</h1>
+      </div>
     </>
   );
 }
